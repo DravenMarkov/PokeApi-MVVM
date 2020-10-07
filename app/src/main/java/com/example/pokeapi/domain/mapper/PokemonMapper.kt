@@ -13,7 +13,5 @@ class PokemonMapper {
                 pokedex_number = model.pokedex_number
             )
         }
-
-
     }
 }

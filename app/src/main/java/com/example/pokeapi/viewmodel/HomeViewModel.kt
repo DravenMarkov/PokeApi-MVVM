@@ -19,12 +19,17 @@ class HomeViewModel : ViewModel() {
 
     private val listData = MutableLiveData<List<PokedexEntity.Result>>()
 
+    private val list = mutableListOf<PokedexEntity.Result>()
+
+    private var offset = 0
+
     fun setListData(listPokedex: List<PokedexEntity.Result>) {
-        listData.value = listPokedex
+
+        list.addAll(listPokedex)
+        listData.value = list
     }
 
-    fun getListPokedex(offset: Int) {
-
+    fun getListPokedex() {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(Consts.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -33,6 +38,7 @@ class HomeViewModel : ViewModel() {
         val pokeService = retrofit.create(PokeApi::class.java)
 
         val call = pokeService.getPokedex(offset)
+        offset += 20
 
         call.enqueue(object : Callback<PokedexData> {
             override fun onResponse(call: Call<PokedexData>, response: Response<PokedexData>) {
@@ -44,7 +50,6 @@ class HomeViewModel : ViewModel() {
             override fun onFailure(call: Call<PokedexData>, t: Throwable) {
                 Log.e("ERROR_GETTING_DATA", t.localizedMessage)
             }
-
         })
     }
 

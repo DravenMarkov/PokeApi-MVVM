@@ -19,16 +19,16 @@ class HomeAdapter(
 
     var onItemClick: ((PokedexEntity.Result) -> Unit)? = null
 
-    private var poke_db = mutableListOf<PokedexEntity.Result>()
+    private var poke_db = listOf<PokedexEntity.Result>()
 
     fun setListData(data: MutableList<PokedexEntity.Result>) {
-        poke_db.addAll(data)
+        poke_db = data
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun setData(pokemon: PokedexEntity.Result) {
-            itemView.pokemon_name_tv.text = pokemon.name
+            itemView.pokemon_name_tv.text = pokemon.name.capitalize()
         }
     }
 
@@ -43,7 +43,7 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setData(poke_db[position])
-        val pokeNumber = position + 1
+        val pokeNumber = poke_db[position].url.split("/")[6]
         Glide.with(context)
             .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokeNumber.png")
             .into(holder.itemView.pokemon_image_iv)

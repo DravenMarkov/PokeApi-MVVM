@@ -7,11 +7,11 @@ class PokedexMapper {
 
     companion object {
 
-        fun convert(listPokemon: List<PokedexData.Result>) : List<PokedexEntity.Result> =
+        fun convert(listPokemon: List<PokedexData.Result>): List<PokedexEntity.Result> =
             listPokemon.map { convert(it) }
 
 
-        fun convert(model: PokedexData.Result): PokedexEntity.Result = with(model){
+        fun convert(model: PokedexData.Result): PokedexEntity.Result = with(model) {
             PokedexEntity.Result(
                 name = name,
                 url = url

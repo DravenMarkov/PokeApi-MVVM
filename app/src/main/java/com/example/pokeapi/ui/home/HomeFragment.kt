@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var adapter: HomeAdapter
 
-    private var offset = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +40,12 @@ class HomeFragment : Fragment() {
         adapter = HomeAdapter(requireContext())
 
         //Get the first list of pokémon
-        viewModel.getListPokedex(0)
+        viewModel.getListPokedex()
         pokedex_recycler.adapter = adapter
         adapter.onItemClick = {
             findNavController().navigate(
                 R.id.action_home_to_detail_dest,
-                bundleOf("pokemon_data" to it)
+                bundleOf("pokemon_url" to it.url)
             )
         }
 
@@ -60,8 +60,8 @@ class HomeFragment : Fragment() {
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (!recyclerView.canScrollVertically(1)) {
-                    offset += 20
-                    viewModel.getListPokedex(offset)
+
+                    viewModel.getListPokedex()
                 }
             }
         })
