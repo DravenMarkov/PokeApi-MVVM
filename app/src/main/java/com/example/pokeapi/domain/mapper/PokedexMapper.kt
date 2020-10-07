@@ -3,7 +3,7 @@ package com.example.pokeapi.domain.mapper
 import com.example.pokeapi.data.entity.PokedexData
 import com.example.pokeapi.domain.entity.PokedexEntity
 
-class ResultsMapper {
+class PokedexMapper {
 
     companion object {
 

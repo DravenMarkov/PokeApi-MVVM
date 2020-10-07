@@ -7,7 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.example.pokeapi.data.api.PokeApi
 import com.example.pokeapi.data.entity.PokedexData
 import com.example.pokeapi.domain.entity.PokedexEntity
-import com.example.pokeapi.domain.mapper.ResultsMapper
+import com.example.pokeapi.domain.mapper.PokedexMapper
+import com.example.pokeapi.utils.Consts
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +26,7 @@ class HomeViewModel : ViewModel() {
     fun getListPokedex(offset: Int) {
 
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
+            .baseUrl(Consts.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -36,7 +37,7 @@ class HomeViewModel : ViewModel() {
         call.enqueue(object : Callback<PokedexData> {
             override fun onResponse(call: Call<PokedexData>, response: Response<PokedexData>) {
                 if (response.isSuccessful) {
-                    setListData(ResultsMapper.convert(response.body()!!.results))
+                    setListData(PokedexMapper.convert(response.body()!!.results))
                 }
             }
 
