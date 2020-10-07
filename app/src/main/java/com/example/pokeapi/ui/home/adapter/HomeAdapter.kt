@@ -19,10 +19,10 @@ class HomeAdapter(
 
     var onItemClick: ((PokedexEntity.Result) -> Unit)? = null
 
-    private var poke_db = listOf<PokedexEntity.Result>()
+    private var pokedexList = listOf<PokedexEntity.Result>()
 
-    fun setListData(data: MutableList<PokedexEntity.Result>) {
-        poke_db = data
+    fun setListData(list: MutableList<PokedexEntity.Result>) {
+        pokedexList = list
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,14 +39,15 @@ class HomeAdapter(
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = poke_db.size
+    override fun getItemCount(): Int = pokedexList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(poke_db[position])
-        val pokeNumber = poke_db[position].url.split("/")[6]
+        holder.setData(pokedexList[position])
+        //Get pokedex number of the pokémon, I know, that is a little weird
+        val pokeNumber = pokedexList[position].url.split("/")[6]
         Glide.with(context)
             .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokeNumber.png")
             .into(holder.itemView.pokemon_image_iv)
-        holder.itemView.setOnClickListener { onItemClick?.invoke(poke_db[position]) }
+        holder.itemView.setOnClickListener { onItemClick?.invoke(pokedexList[position]) }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.pokeapi.ui
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,9 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.pokeapi.viewmodel.DetailViewModel
 import com.example.pokeapi.R
-import com.example.pokeapi.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.detail_fragment.*
-import kotlinx.android.synthetic.main.detail_fragment.view.*
 
 class DetailFragment : Fragment() {
 
@@ -35,14 +32,15 @@ class DetailFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
-        //Get Pokémon
+        //Get pokédex number of the pokémon, I know it's little weird
         val pokedexNumber = pokemonData.split("/")[6].toInt()
         viewModel.getPokemon(pokedexNumber)
 
         viewModel.getPokemonLiveData().observe(viewLifecycleOwner, Observer {
             Glide.with(context)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokedexNumber.png")
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${it.pokedex_number}.png")
                 .into(pokemon_image_iv)
+            pokemon_number_value_tv.text = it.pokedex_number.toString()
             pokemon_name_value_tv.text = it.name.capitalize()
 
         })

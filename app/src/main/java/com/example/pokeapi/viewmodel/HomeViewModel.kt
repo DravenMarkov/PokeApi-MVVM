@@ -17,16 +17,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class HomeViewModel : ViewModel() {
 
-    private val listData = MutableLiveData<List<PokedexEntity.Result>>()
+    private val livePokedexList = MutableLiveData<List<PokedexEntity.Result>>()
 
-    private val list = mutableListOf<PokedexEntity.Result>()
+    private val pokedexList = mutableListOf<PokedexEntity.Result>()
 
     private var offset = 0
 
     fun setListData(listPokedex: List<PokedexEntity.Result>) {
 
-        list.addAll(listPokedex)
-        listData.value = list
+        pokedexList.addAll(listPokedex)
+        livePokedexList.value = pokedexList
     }
 
     fun getListPokedex() {
@@ -54,6 +54,6 @@ class HomeViewModel : ViewModel() {
     }
 
     fun getListPokedexLiveData(): LiveData<List<PokedexEntity.Result>> {
-        return listData
+        return livePokedexList
     }
 }
