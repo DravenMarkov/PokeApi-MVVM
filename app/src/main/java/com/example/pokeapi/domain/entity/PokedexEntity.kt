@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 data class PokedexEntity(
     val count: Int,
     val next: String,
-    val previous: Any,
+    val previous: String?,
     val results: List<Result>
 ) {
     @Parcelize

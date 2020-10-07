@@ -1,28 +1,34 @@
 package com.example.pokeapi.ui.home.adapter
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.pokeapi.R
 import com.example.pokeapi.domain.entity.PokedexEntity
+import kotlinx.android.synthetic.main.detail_fragment.view.pokemon_image_iv
+import kotlinx.android.synthetic.main.view_item_pokemon.view.*
 
 class HomeAdapter(
-    private val poke_db: PokedexEntity,
-    private val listener: (PokedexEntity.Result) -> Unit
+    private val context: Context
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
 
+    var onItemClick: ((PokedexEntity.Result) -> Unit)? = null
+
+    private var poke_db = mutableListOf<PokedexEntity.Result>()
+
+    fun setListData(data: MutableList<PokedexEntity.Result>) {
+        poke_db.addAll(data)
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val poke_image = itemView.findViewById<ImageView>(R.id.pokemon_image_iv)
-        val poke_name = itemView.findViewById<TextView>(R.id.pokemon_name_tv)
-
         fun setData(pokemon: PokedexEntity.Result) {
-            poke_name.text = pokemon.name
+            itemView.pokemon_name_tv.text = pokemon.name
         }
     }
 
@@ -33,12 +39,14 @@ class HomeAdapter(
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = poke_db.results.size
+    override fun getItemCount(): Int = poke_db.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(poke_db.results[position])
-        holder.itemView.setOnClickListener { listener(poke_db.results[position]) }
+        holder.setData(poke_db[position])
+        val pokeNumber = position + 1
+        Glide.with(context)
+            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokeNumber.png")
+            .into(holder.itemView.pokemon_image_iv)
+        holder.itemView.setOnClickListener { onItemClick?.invoke(poke_db[position]) }
     }
-
-
 }
