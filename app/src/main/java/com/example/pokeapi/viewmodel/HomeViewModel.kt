@@ -1,5 +1,6 @@
 package com.example.pokeapi.viewmodel
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,9 +14,9 @@ class HomeViewModel : ViewModel() {
     private val pokedexUseCase = GetPokedexUseCase()
 
     // TODO change approach t
-    init {
+  /*  init {
         getListPokedex()
-    }
+    }*/
 
     fun setListData(listPokedex: PokedexEntity) {
         listData.value = listPokedex

@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokeapi.viewmodel.HomeViewModel
 import com.example.pokeapi.R
@@ -34,17 +37,26 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //val recycler = requireActivity().findViewById<RecyclerView>(R.id.pokedex_recycler)
-
+        //Set the view model
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
+        //Get the list of pokémon
+        viewModel.getListPokedex()
         val pokedexObserver = Observer<PokedexEntity> {
             Log.d("Pokedex", it.toString())
-            adapter = HomeAdapter(it)
-            pokedex_recycler.adapter = adapter
+            pokedex_recycler.adapter = HomeAdapter(it) {
+                navigateToDetail(it)
+            }
         }
 
         viewModel.getListPokedexLiveData().observe(viewLifecycleOwner, pokedexObserver)
+    }
+
+    fun navigateToDetail(pokemon: PokedexEntity.Result) {
+        findNavController().navigate(
+            R.id.action_home_to_detail_dest,
+            bundleOf("pokemon_data" to pokemon)
+        )
     }
 
 }

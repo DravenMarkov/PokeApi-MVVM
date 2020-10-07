@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokeapi.R
 import com.example.pokeapi.domain.entity.PokedexEntity
 
-class HomeAdapter(private val poke_db : PokedexEntity) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter(
+    private val poke_db: PokedexEntity,
+    private val listener: (PokedexEntity.Result) -> Unit
+) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,7 +36,8 @@ class HomeAdapter(private val poke_db : PokedexEntity) : RecyclerView.Adapter<Ho
     override fun getItemCount(): Int = poke_db.results.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(poke_db.results.get(position))
+        holder.setData(poke_db.results[position])
+        holder.itemView.setOnClickListener { listener(poke_db.results[position]) }
     }
 
 
