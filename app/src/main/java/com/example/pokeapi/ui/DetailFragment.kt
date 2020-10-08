@@ -1,14 +1,17 @@
 package com.example.pokeapi.ui
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.bumptech.glide.Glide
+import com.example.pokeapi.BuildConfig
 import com.example.pokeapi.viewmodel.DetailViewModel
 import com.example.pokeapi.R
 import com.example.pokeapi.data.database.PokemonDatabase
@@ -36,7 +39,16 @@ class DetailFragment : Fragment() {
 
         //Get pokédex number of the pokémon, I know it's little weird
         val pokedexNumber = pokemonData.split("/")[6].toInt()
-        viewModel.getPokemon(pokedexNumber)
+
+        var databaseInstance = PokemonDatabase.getDatabaseInstance(requireContext())
+
+        viewModel.setInstanceOfDb(databaseInstance)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            viewModel.getPokemonDb(pokedexNumber)
+        } else {
+            viewModel.getPokemon(pokedexNumber)
+        }
 
         viewModel.getPokemonLiveData().observe(viewLifecycleOwner, Observer {
             Glide.with(context)

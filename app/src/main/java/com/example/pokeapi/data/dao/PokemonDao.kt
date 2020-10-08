@@ -13,5 +13,8 @@ interface PokemonDao {
     fun insert(pokemonEntity: PokemonEntity)
 
     @Query("SELECT * FROM pokemonentity WHERE pokedex_number = :pokedex_number")
-    fun findPokemonByNumber(pokedex_number: Int) : Optional<PokemonEntity>
+    fun findPokemonByNumber(pokedex_number: Int): PokemonEntity
+
+    @Query("SELECT EXISTS(SELECT * FROM pokemonentity WHERE pokedex_number = :pokedex_number)")
+    fun isExist(pokedex_number: Int): Boolean
 }

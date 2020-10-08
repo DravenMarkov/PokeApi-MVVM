@@ -1,11 +1,14 @@
 package com.example.pokeapi.viewmodel
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.Room
 import com.example.pokeapi.data.api.PokeApi
+import com.example.pokeapi.data.database.PokemonDatabase
 import com.example.pokeapi.data.entity.PokemonData
 import com.example.pokeapi.domain.entity.PokemonEntity
 import com.example.pokeapi.domain.mapper.PokemonMapper
@@ -17,15 +20,35 @@ class DetailViewModel : ViewModel() {
 
     private val pokemon = MutableLiveData<PokemonEntity>()
 
+    private lateinit var pokeDatabaseInstance: PokemonDatabase
 
+    //database logic
+    fun setInstanceOfDb(databaseInstance: PokemonDatabase) {
+        pokeDatabaseInstance = databaseInstance
+    }
+
+    fun savePokemonIntoDb(poke: PokemonEntity) {
+        pokeDatabaseInstance.pokemonDao().insert(poke)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun getPokemonDb(pokedexNumber: Int) {
+        if (pokeDatabaseInstance.pokemonDao().isExist(pokedexNumber)) {
+            pokemon.value = pokeDatabaseInstance.pokemonDao().findPokemonByNumber(pokedexNumber)
+        } else {
+            getPokemon(pokedexNumber)
+        }
+
+    }
+
+    //livedata logic
     fun setPokemonData(poke: PokemonEntity) {
         pokemon.value = PokemonEntity(poke.name, poke.pokedex_number)
+        savePokemonIntoDb(poke)
 
     }
 
     fun getPokemon(pokedexNumber: Int) {
-
-
 
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(Consts.BASE_URL)
