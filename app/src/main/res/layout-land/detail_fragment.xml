@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".ui.DetailFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/pokemon_image_iv"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pokemon_number_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
+        android:text="Nombre Pokémon"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/pokemon_number_value_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_image_iv" />
+
+    <TextView
+        android:id="@+id/pokemon_number_value_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_number_title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pokemon_number_title_tv"
+        app:layout_constraintTop_toTopOf="@id/pokemon_number_title_tv"
+        tools:text="MissingNo." />
+
+    <TextView
+        android:id="@+id/pokemon_name_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="8dp"
+        android:text="Número de Pokédex"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/pokemon_name_value_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_number_title_tv" />
+
+    <TextView
+        android:id="@+id/pokemon_name_value_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_name_title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pokemon_name_title_tv"
+        app:layout_constraintTop_toTopOf="@id/pokemon_name_title_tv"
+        tools:text="MissingNo." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</ScrollView>
