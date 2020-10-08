@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.room.Room
 import com.example.pokeapi.data.api.PokeApi
 import com.example.pokeapi.data.entity.PokemonData
 import com.example.pokeapi.domain.entity.PokemonEntity
@@ -23,6 +24,9 @@ class DetailViewModel : ViewModel() {
     }
 
     fun getPokemon(pokedexNumber: Int) {
+
+
+
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(Consts.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -39,7 +43,7 @@ class DetailViewModel : ViewModel() {
 
             override fun onResponse(call: Call<PokemonData>, response: Response<PokemonData>) {
                 if (response.isSuccessful) {
-                    setPokemonData(PokemonMapper.convert(response.body()!!))
+                    response.body()?.let { data -> setPokemonData(PokemonMapper.convert(data)) }
                 }
 
             }

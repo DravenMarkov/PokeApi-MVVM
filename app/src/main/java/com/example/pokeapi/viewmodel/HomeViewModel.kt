@@ -8,6 +8,7 @@ import com.example.pokeapi.data.api.PokeApi
 import com.example.pokeapi.data.entity.PokedexData
 import com.example.pokeapi.domain.entity.PokedexEntity
 import com.example.pokeapi.domain.mapper.PokedexMapper
+import com.example.pokeapi.domain.mapper.PokemonMapper
 import com.example.pokeapi.utils.Consts
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +44,8 @@ class HomeViewModel : ViewModel() {
         call.enqueue(object : Callback<PokedexData> {
             override fun onResponse(call: Call<PokedexData>, response: Response<PokedexData>) {
                 if (response.isSuccessful) {
-                    setListData(PokedexMapper.convert(response.body()!!.results))
+                    response.body()
+                        ?.let { data -> setListData(PokedexMapper.convert(data.results)) }
                 }
             }
 
