@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.bumptech.glide.Glide
@@ -15,11 +16,15 @@ import com.example.pokeapi.BuildConfig
 import com.example.pokeapi.viewmodel.DetailViewModel
 import com.example.pokeapi.R
 import com.example.pokeapi.data.database.PokemonDatabase
+import com.example.pokeapi.di.component.DaggerFragmentComponent
+import com.example.pokeapi.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.detail_fragment.*
+import javax.inject.Inject
 
-class DetailFragment : Fragment() {
+class DetailFragment : BaseFragment() {
 
-    private lateinit var viewModel: DetailViewModel
+    @Inject
+    lateinit var viewModel: DetailViewModel
 
 
     override fun onCreateView(
@@ -28,6 +33,17 @@ class DetailFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.detail_fragment, container, false)
     }
+
+    override fun bindViewModel(): ViewModel = viewModel
+
+    override fun injectComponent() {
+        DaggerFragmentComponent.builder()
+            .applicationComponent(App.baseComponent)
+            .build()
+            .inject(this)
+    }
+
+    override fun bindLayout(): Int = R.layout.detail_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

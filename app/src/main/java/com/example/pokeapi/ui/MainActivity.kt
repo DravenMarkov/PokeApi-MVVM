@@ -12,14 +12,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-      /*  // TODO check if it works
-        viewModel = ViewModelProvider(this).get(PokedexViewModel::class.java)
-
-        val pokedexObserver = Observer<PokedexEntity> {
-            Log.d("Pokedex", it.toString())
-        }
-
-         viewModel.getListPokedexLiveData().observe(this, pokedexObserver) */
-
     }
 }

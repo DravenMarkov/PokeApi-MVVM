@@ -7,30 +7,38 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokeapi.viewmodel.HomeViewModel
 import com.example.pokeapi.R
+import com.example.pokeapi.di.component.DaggerFragmentComponent
 import com.example.pokeapi.domain.entity.PokedexEntity
+import com.example.pokeapi.ui.App
+import com.example.pokeapi.ui.base.BaseFragment
 import com.example.pokeapi.ui.home.adapter.HomeAdapter
 import kotlinx.android.synthetic.main.home_fragment.*
+import javax.inject.Inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
 
-    private lateinit var viewModel: HomeViewModel
+    @Inject
+    lateinit var viewModel: HomeViewModel
 
     private lateinit var adapter: HomeAdapter
 
+    override fun bindViewModel(): ViewModel = viewModel
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+    override fun injectComponent() {
+        DaggerFragmentComponent.builder()
+            .applicationComponent(App.baseComponent)
+            .build()
+            .inject(this)
     }
+
+    override fun bindLayout(): Int = R.layout.home_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
