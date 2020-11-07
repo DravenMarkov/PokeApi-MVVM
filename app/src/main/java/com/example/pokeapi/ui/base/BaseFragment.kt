@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModel
 
 abstract class BaseFragment : Fragment() {
 
-    private val viewModel by lazy { bindViewModel() }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,9 +19,6 @@ abstract class BaseFragment : Fragment() {
         return view
     }
 
-    abstract fun bindViewModel() : ViewModel
-
-    abstract fun injectComponent()
 
     @LayoutRes
     abstract fun bindLayout(): Int

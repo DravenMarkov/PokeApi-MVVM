@@ -1,23 +1,19 @@
 package com.example.pokeapi.ui
 
 import android.app.Application
-import com.example.pokeapi.di.component.ApplicationComponent
-import com.example.pokeapi.di.component.DaggerApplicationComponent
-import com.example.pokeapi.di.module.ApplicationModule
+import com.example.pokeapi.di.appModule
+import com.example.pokeapi.di.netModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class App : Application(){
 
-    companion object{
-        lateinit var baseComponent: ApplicationComponent
-    }
 
     override fun onCreate() {
         super.onCreate()
-
-        baseComponent = DaggerApplicationComponent
-            .builder()
-            .applicationModule(ApplicationModule(this))
-            .build()
-            .apply { inject(this@App)}
+        startKoin {
+            androidContext(this@App)
+            modules(listOf(appModule, netModule))
+        }
     }
 }

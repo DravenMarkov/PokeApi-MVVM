@@ -8,21 +8,20 @@ import com.example.pokeapi.data.api.PokeApi
 import com.example.pokeapi.data.entity.PokedexData
 import com.example.pokeapi.domain.entity.PokedexEntity
 import com.example.pokeapi.domain.mapper.PokedexMapper
-import com.example.pokeapi.domain.mapper.PokemonMapper
-import com.example.pokeapi.utils.Consts
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val pokeService: PokeApi) : ViewModel() {
+
 
     private val livePokedexList = MutableLiveData<List<PokedexEntity.Result>>()
 
     private val pokedexList = mutableListOf<PokedexEntity.Result>()
 
     private var offset = 0
+
+
 
     fun setListData(listPokedex: List<PokedexEntity.Result>) {
 
@@ -31,13 +30,8 @@ class HomeViewModel : ViewModel() {
     }
 
     fun getListPokedex() {
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(Consts.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        val pokeService = retrofit.create(PokeApi::class.java)
-
+        // TODO SET THIS AS USE CASE
         val call = pokeService.getPokedex(offset)
         offset += 20
 

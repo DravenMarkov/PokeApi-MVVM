@@ -12,19 +12,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.bumptech.glide.Glide
-import com.example.pokeapi.BuildConfig
 import com.example.pokeapi.viewmodel.DetailViewModel
 import com.example.pokeapi.R
 import com.example.pokeapi.data.database.PokemonDatabase
-import com.example.pokeapi.di.component.DaggerFragmentComponent
 import com.example.pokeapi.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.detail_fragment.*
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModel: DetailViewModel
+    val viewModel by viewModel<DetailViewModel>()
 
 
     override fun onCreateView(
@@ -34,24 +31,12 @@ class DetailFragment : BaseFragment() {
         return inflater.inflate(R.layout.detail_fragment, container, false)
     }
 
-    override fun bindViewModel(): ViewModel = viewModel
-
-    override fun injectComponent() {
-        DaggerFragmentComponent.builder()
-            .applicationComponent(App.baseComponent)
-            .build()
-            .inject(this)
-    }
-
     override fun bindLayout(): Int = R.layout.detail_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         var pokemonData: String = arguments?.getString("pokemon_url").toString()
-
-
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
         //Get pokédex number of the pokémon, I know it's little weird
         val pokedexNumber = pokemonData.split("/")[6].toInt()
