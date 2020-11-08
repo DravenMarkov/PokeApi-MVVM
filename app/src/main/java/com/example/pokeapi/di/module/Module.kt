@@ -1,6 +1,9 @@
-package com.example.pokeapi.di
+package com.example.pokeapi.di.module
 
+import android.content.Context
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.pokeapi.data.api.PokeApi
+import com.example.pokeapi.data.database.PokemonDatabase
 import com.example.pokeapi.utils.Consts
 import com.example.pokeapi.viewmodel.DetailViewModel
 import com.example.pokeapi.viewmodel.HomeViewModel
@@ -14,6 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val appModule = module {
+
+    single { provideDataBase(get()) }
 
     viewModel { HomeViewModel(get()) }
 
@@ -56,3 +61,6 @@ fun provideOkHttpClient(): OkHttpClient =
 
 fun providePokeApiServices(retrofit: Retrofit): PokeApi =
     retrofit.create(PokeApi::class.java)
+
+fun provideDataBase(context: Context) : PokemonDatabase =
+    PokemonDatabase.getDatabaseInstance(context)

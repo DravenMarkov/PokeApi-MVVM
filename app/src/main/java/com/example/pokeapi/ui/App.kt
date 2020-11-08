@@ -1,9 +1,10 @@
 package com.example.pokeapi.ui
 
 import android.app.Application
-import com.example.pokeapi.di.appModule
-import com.example.pokeapi.di.netModule
+import com.example.pokeapi.di.module.appModule
+import com.example.pokeapi.di.module.netModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 class App : Application(){
@@ -12,8 +13,12 @@ class App : Application(){
     override fun onCreate() {
         super.onCreate()
         startKoin {
+            androidLogger()
             androidContext(this@App)
-            modules(listOf(appModule, netModule))
+            modules(listOf(
+                appModule,
+                netModule
+            ))
         }
     }
 }

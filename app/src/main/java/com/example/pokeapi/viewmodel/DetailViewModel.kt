@@ -20,6 +20,7 @@ class DetailViewModel : ViewModel() {
 
     private val pokemon = MutableLiveData<PokemonEntity>()
 
+    // TODO change this aproach to a USE CASE
     private lateinit var pokeDatabaseInstance: PokemonDatabase
 
     //database logic
@@ -68,7 +69,6 @@ class DetailViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     response.body()?.let { data -> setPokemonData(PokemonMapper.convert(data)) }
                 }
-
             }
         })
     }
