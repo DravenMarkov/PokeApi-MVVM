@@ -1,6 +1,7 @@
 package com.example.pokeapi.ui.home.adapter
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.pokeapi.R
 import com.example.pokeapi.domain.entity.PokedexEntity
 import kotlinx.android.synthetic.main.detail_fragment.view.pokemon_image_iv
 import kotlinx.android.synthetic.main.view_item_pokemon.view.*
+import java.util.*
 
 class HomeAdapter(
     private val context: Context
@@ -32,6 +34,7 @@ class HomeAdapter(
         }
     }
 
+    @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.view_item_pokemon, null, false)

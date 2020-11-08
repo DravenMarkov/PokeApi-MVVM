@@ -62,7 +62,7 @@ class DetailViewModel : ViewModel() {
 
         call.enqueue(object : Callback<PokemonData> {
             override fun onFailure(call: Call<PokemonData>, t: Throwable) {
-                Log.e("ERROR_GETTIN_POKEMON", t.localizedMessage)
+                Log.e("ERROR_GETTIN_POKEMON", t.localizedMessage!!)
             }
 
             override fun onResponse(call: Call<PokemonData>, response: Response<PokemonData>) {

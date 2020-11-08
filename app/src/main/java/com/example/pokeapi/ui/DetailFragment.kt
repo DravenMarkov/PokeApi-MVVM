@@ -15,6 +15,7 @@ import com.example.pokeapi.utils.Utils
 import kotlinx.android.synthetic.main.detail_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 class DetailFragment : BaseFragment() {
 
@@ -32,6 +33,7 @@ class DetailFragment : BaseFragment() {
 
     override fun bindLayout(): Int = R.layout.detail_fragment
 
+    @ExperimentalStdlibApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,7 +55,7 @@ class DetailFragment : BaseFragment() {
                 .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${it.pokedex_number}.png")
                 .into(pokemon_image_iv)
             pokemon_number_value_tv.text = it.pokedex_number.toString()
-            pokemon_name_value_tv.text = it.name.capitalize()
+            pokemon_name_value_tv.text = it.name.capitalize(Locale.getDefault())
 
         })
     }

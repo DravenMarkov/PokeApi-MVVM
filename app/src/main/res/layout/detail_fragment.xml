@@ -14,7 +14,8 @@
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/pokemon_image_description" />
 
     <TextView
         android:id="@+id/pokemon_number_title_tv"
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginStart="8dp"
-        android:text="Nombre Pokémon"
+        android:text="@string/pokemon_name_text"
         android:textColor="#FFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/pokemon_number_value_tv"
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginStart="8dp"
-        android:text="Número de Pokédex"
+        android:text="@string/number_pokedex_text"
         android:textColor="#FFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/pokemon_name_value_tv"

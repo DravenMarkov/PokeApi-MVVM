@@ -44,7 +44,7 @@ class HomeViewModel(private val pokeService: PokeApi) : ViewModel() {
             }
 
             override fun onFailure(call: Call<PokedexData>, t: Throwable) {
-                Log.e("ERROR_GETTING_DATA", t.localizedMessage)
+                Log.e("ERROR_GETTING_DATA", t.localizedMessage!!)
             }
         })
     }
